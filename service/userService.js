@@ -2,8 +2,8 @@ import axios from "axios";
 
 import authService from "./authService";
 
-import uri from "../config/next";
-import djangoURL from "../config/django";
+import furi from "../config/next";
+import buri from "../config/django";
 
 const userService = () => {
   const __saveToLocalStorage = (response) => {
@@ -36,33 +36,33 @@ const userService = () => {
 
     // request to register with user credentials
     try {
-      // const res = await axios.post(`${uri}api/user/register/`, {
-      //   email,
-      //   password,
-      //   password2,
-      //   firstname,
-      //   lastname,
-      //   username,
-      // });
+      const res = await axios.post(`${buri}api/user/register/`, {
+        email,
+        password,
+        password2,
+        firstname,
+        lastname,
+        username,
+      });
 
       console.log("hallo");
 
       console.log(email, password, password2, firstname, lastname, username);
 
-      const res = await axios.post(
-        `${uri}api/register/`,
-        {
-          email,
-          password,
-          password2,
-          firstname,
-          lastname,
-          username,
-        },
-        { withCredentials: true }
-      );
+      // const res = await axios.post(
+      //   `${furi}api/register/`,
+      //   {
+      //     email,
+      //     password,
+      //     password2,
+      //     firstname,
+      //     lastname,
+      //     username,
+      //   },
+      //   { withCredentials: true }
+      // );
 
-      __saveToLocalStorage(res.data);
+      __saveToLocalStorage(res);
 
       // assign user data to variable and return to component
       const user = res.data;
@@ -82,20 +82,20 @@ const userService = () => {
   const login = async (email, password) => {
     /* This function uses /api/logout.js to ADD cookies  */
     console.log("in login func2");
-    console.log(uri);
     try {
       // request to login with user credentials
       const res = await axios.post(
-        `${uri}api/login/`,
+        `${buri}api/user/login/`,
         {
           email,
           password,
-        },
-        { withCredentials: true }
+        }
+        // { withCredentials: true }
       );
       console.log("in login func");
+      console.log(res);
 
-      __saveToLocalStorage(res.data);
+      __saveToLocalStorage(res);
       // assign user data to variable and return to component
       const user = res.data;
       return user;
@@ -104,7 +104,6 @@ const userService = () => {
       console.log(e);
       console.log(e.response);
       console.log(e.response.status);
-      throw new Error("Error: login failed");
 
       // TODO: Add all exception cases
       // Basis exception s.t
@@ -119,17 +118,11 @@ const userService = () => {
     const tokens = JSON.parse(tokensStr);
 
     try {
-      await axios.post(`${djangoURL}api/user/logout/`, tokens, {
-        headers: {
-          Authorization: `Bearer ${tokens.access}`,
-        },
-      });
       // request to login with user credentials
-      // const res = await axios.post(`${uri}api/userlogout/`, tokens, {
-      //   withCredentials: true,
-      // });
+      const res = await axios.post(`${buri}api/user/logout/`, tokens);
     } catch (e) {
       // Service or user input failed
+      console.log(e);
       console.log(e.response);
       console.log(e.response.status);
 
@@ -141,10 +134,50 @@ const userService = () => {
     __removeCachedUserData();
   };
 
+  const requestChangePassword = async (email) => {
+    try {
+      const res = await axios.post(`${buri}api/user/requestResetEmail/`, {
+        email,
+      });
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const checkChangePassword = async ({ uidb64, token }) => {
+    try {
+      const res = await axios.get(
+        `${buri}api/user/passwordReset/${uidb64}/${token}/`
+      );
+      return res;
+    } catch (e) {
+      return e.response;
+    }
+  };
+
+  const changePassword = async ({ uidb64, token, password }) => {
+    console.log(uidb64, token, password);
+    try {
+      // await axios.get(`${buri}api/user/passwordResetComplete/`);
+      const res = await axios.patch(`${buri}api/user/passwordResetComplete/`, {
+        uidb64,
+        token,
+        password,
+      });
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return {
     register,
     login,
     logout,
+    requestChangePassword,
+    changePassword,
+    checkChangePassword,
   };
 };
 

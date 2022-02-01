@@ -67,28 +67,30 @@ const Game = () => {
   );
 };
 
-export async function getServerSideProps({ req }) {
-  // Source - SSR: https://imgur.com/a/WhqxKNu
-  // Extract accestoken from cookie
-  const accessToken = cookieService.getAccessToken(req);
-  // // get all games to join
-  const res = await gameService.getAllGames(accessToken);
+// export async function getServerSideProps({ req }) {
+//   // Source - SSR: https://imgur.com/a/WhqxKNu
+//   // Extract accestoken from cookie
+//   const accessToken = cookieService.getAccessToken(req);
+//   console.log("retrieving token");
+//   console.log(accessToken);
+//   // // get all games to join
+//   const res = await gameService.getAllGames(accessToken);
 
-  // // extract data from response
-  const data = res.data;
+//   // // extract data from response
+//   const data = res.data;
 
-  if (res.status === 401) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/login",
-      },
-    };
-  }
+//   if (res.status === 401) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: "/login",
+//       },
+//     };
+//   }
 
-  return {
-    props: { games: data.lis }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { games: data.lis }, // will be passed to the page component as props
+//   };
+// }
 
 export default Game;

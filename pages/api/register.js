@@ -28,10 +28,10 @@ export default async (req, res) => {
   } catch (e) {
     // console.log(e);
     // console.log(e);
-    console.log(e.response);
-    const b = e.response;
+    // console.log(e.response);
+    // const b = e.response;
     // console.log(e);
     // console.log(e.response.data);
-    return res.status(400).json({ err: { b } });
+    return res.status(400).json({ err: "error" });
   }
 };

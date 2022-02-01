@@ -41,33 +41,27 @@ const Register = (props) => {
     <div className={loginStyles.container}>
       <div className="form-main-outer">
         <div className="form-main-inner">
+          <h1> Sign up </h1>
           <div>
             <form>
-              <h1> Sign up </h1>
               <h3>Username</h3>
               <input
                 placeholder="Enter your username"
                 type="text"
                 onChange={(e) => setUsername(e.target.value)}
               />
-
-              <div className={loginStyles.names}>
-                <h3 id={loginStyles.names}>First name</h3>
-                <h3 id={loginStyles.names}>Last name</h3>
-              </div>
-              <div className={loginStyles.inputNames}>
-                <input
-                  placeholder="First name"
-                  type="text"
-                  onChange={(e) => setFirstname(e.target.value)}
-                />
-
-                <input
-                  placeholder="Last name"
-                  type="text"
-                  onChange={(e) => setLastname(e.target.value)}
-                />
-              </div>
+              <h3>First name</h3>
+              <input
+                placeholder="First name"
+                type="text"
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+              <h3>Last name</h3>
+              <input
+                placeholder="Last name"
+                type="text"
+                onChange={(e) => setLastname(e.target.value)}
+              />
 
               <h3>Email Id</h3>
               <input
@@ -99,17 +93,12 @@ const Register = (props) => {
               >
                 Sign up
               </button>
+              <HomeButton />
             </form>
           </div>
         </div>
-        <div id={loginStyles.title}>
-          <h1 id="title"> Safe Game </h1>
-        </div>
       </div>
-      <div className={loginStyles.right}>
-        <GuardImage CSSclass={loginStyles.img} />
-        <HomeButton />
-      </div>
+      <div className={loginStyles.right}></div>
     </div>
   );
 };

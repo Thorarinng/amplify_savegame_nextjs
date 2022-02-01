@@ -58,10 +58,7 @@ const Layout = ({ children }) => {
       <div className="blood">
         <GameOver />
       </div>
-      <div className={homeStyles.container}>
-        <div>Layout.jsx </div>
-        {children}
-      </div>
+      <div className={homeStyles.container}>{children}</div>
     </div>
   );
 };

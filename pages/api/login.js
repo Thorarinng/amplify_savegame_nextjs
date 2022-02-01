@@ -4,9 +4,10 @@ import helper from "./helper";
 import uri from "../../config/django";
 
 export default async (req, res) => {
-  console.log("heidi");
   const cookies = cookie.parse(req.headers.cookie ?? "");
   const access = cookies.access ?? false;
+
+  console.log(access);
 
   // Send request to django backend
   try {
@@ -16,11 +17,12 @@ export default async (req, res) => {
     // params
     // res: response from nextjs to set cookie headers
     // resp: response from django to grab jwt-token from
+    // console.log(resp.data);
     helper.addCookies(res, resp.data);
 
     return res.status(200).json({ data: resp.data });
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ data: e.response });
+    return res.status(400).json({ data: "error" });
   }
 };

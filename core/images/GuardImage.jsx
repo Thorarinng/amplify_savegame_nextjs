@@ -3,5 +3,5 @@ import React from "react";
 
 export default function GuardImage({ CSSclass = "" }) {
   // return <img className={CSSclass} src={guards} />;
-  return <p> haha </p>;
+  return null;
 }

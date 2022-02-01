@@ -1,8 +1,3 @@
-.container {
-  display: flex;
-  position: relative;
-}
-
 .img {
   margin-top: 15em;
   width: 623.9px;
@@ -31,6 +26,7 @@
 }
 
 #forgotPwd {
+  width: auto;
   display: flex;
   justify-content: flex-end;
 

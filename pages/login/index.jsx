@@ -7,6 +7,7 @@ import GuardImage from "../../core/images/GuardImage";
 
 import loginStyles from "../../styles/Login.module.css";
 import { HomeButton } from "../../core/buttons/HomeButton";
+import { GoBackButton } from "../../core/buttons/GoBackButton";
 
 const Login = () => {
   // Dispatch
@@ -37,9 +38,9 @@ const Login = () => {
     <div className={loginStyles.container}>
       <div className="form-main-outer">
         <div className="form-main-inner">
-          <form className={loginStyles.form}>
+          <form>
             <h1> Sign in </h1>
-            <h3>Email Id</h3>
+            <h3>Email</h3>
             <input
               placeholder="Enter your email address"
               onChange={handleEmailChange}
@@ -53,10 +54,6 @@ const Login = () => {
 
             <br />
 
-            <a href={"reset/password"} id={loginStyles.forgotPwd}>
-              Forgot password
-            </a>
-
             <br />
             <button
               className="btn"
@@ -64,25 +61,19 @@ const Login = () => {
               value="Login"
               onClick={handleLogin}
             >
-              Login Now
+              Login
             </button>
           </form>
 
-          <div className={loginStyles.createAccount}>
-            <h3>Don't have account yet?</h3>
-            <a className="btn" href="register">
-              Create Account
-            </a>
-          </div>
+          <h3>Don't have account yet?</h3>
+          <button className="btn">
+            <a href="register">Create Account</a>
+          </button>
+          <h3>Forgot your password?</h3>
+          <button className="btn">
+            <a href={"reset/password"}>Reset Password</a>
+          </button>
         </div>
-        <div id={loginStyles.title}>
-          <h1 id="title"> Safe Game </h1>
-        </div>
-      </div>
-
-      <div className={loginStyles.right}>
-        <GuardImage CSSclass={loginStyles.img} />
-        <HomeButton />
       </div>
     </div>
   );
