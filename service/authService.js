@@ -5,6 +5,7 @@ const authService = () => {
   const setAuthorizationToken = (token) => {
     //
     if (token) {
+      console.log(token);
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       console.log("true");
     } else {

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Router from "next/router";
 
-export const GoBackButton = ({ path }) => {
+export const GoBackButton = ({ path, title }) => {
   console.log(path);
   return (
     <>
@@ -12,7 +12,9 @@ export const GoBackButton = ({ path }) => {
         </div>
       ) : (
         <Link href={path}>
-          <button className="home-btn">Home</button>
+          <button className={title === "Home" ? "home-btn" : "btn"}>
+            {title}
+          </button>
         </Link>
       )}
     </>

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import homeStyles from "../styles/Home.module.css";
 import jwtDecode from "jwt-decode";
 import authService from "../service/authService";
@@ -14,6 +14,7 @@ import { GameOver } from "./GameOver";
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.userReducer.loggedIn);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   console.log("layout loaded!!");
 
@@ -49,17 +50,25 @@ const Layout = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    refreshToken();
+  useEffect(async () => {
+    await refreshToken();
+    setIsLoaded(true);
   }, []);
 
   return (
-    <div>
-      <div className="blood">
-        <GameOver />
-      </div>
-      <div className={homeStyles.container}>{children}</div>
-    </div>
+    <>
+      {isLoaded && (
+        <div>
+          <div className="blood">
+            <GameOver />
+          </div>
+          <div className={homeStyles.container}>
+            <h1 className="title"> Safe Game</h1>
+            {children}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

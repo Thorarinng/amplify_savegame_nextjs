@@ -42,7 +42,7 @@ export const Game = ({ game }) => {
   useEffect(() => {}, [timeUntil]);
 
   return (
-    <div>
+    <>
       {isFinished ? (
         <> You have finished game </>
       ) : (
@@ -62,31 +62,30 @@ export const Game = ({ game }) => {
               isLocked={isLocked}
             />
           </div>
-          <div onChange={handleValueChange}>
-            {game.QA[`answer${QTA}`].map((q) => {
-              return (
-                <span key={q}>
-                  <input
-                    checked={q == option}
-                    value={q}
-                    type="radio"
-                    name="q"
-                  />
-                  {q}
-                </span>
-              );
-            })}
-            <button
-              disabled={option === null || isLocked}
-              className={isLocked ? "btn-disabled" : "btn"}
-              type="button"
-              onClick={() => handleNext()}
-            >
-              {isLocked ? "Locked" : "Next"}
-            </button>
-          </div>
+          {game.QA[`answer${QTA}`].map((q) => {
+            return (
+              <span key={q}>
+                <input
+                  checked={q == option}
+                  value={q}
+                  type="radio"
+                  name="q"
+                  onChange={handleValueChange}
+                />
+                {q}
+              </span>
+            );
+          })}
+          <button
+            disabled={option === null || isLocked}
+            className={isLocked ? "btn-disabled" : "btn"}
+            type="button"
+            onClick={() => handleNext()}
+          >
+            {isLocked ? "Locked" : "Next"}
+          </button>
         </>
       )}
-    </div>
+    </>
   );
 };

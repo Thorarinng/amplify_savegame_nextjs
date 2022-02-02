@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import characterService from "../service/characterService";
 import charStyles from "../styles/Character.module.css";
 
-export const Character = ({ c }) => {
+export const Character = ({ c, len }) => {
   const router = useRouter();
+
+  useEffect(() => {}, [len]);
+
+  console.log(c, len);
 
   const handleSelectCharacter = async (characterId) => {
     // Select character for specific game

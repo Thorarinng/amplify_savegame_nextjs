@@ -13,7 +13,6 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1 className="title">Safe Game</h1>
         <GuardImage />
         {isLoggedIn ? (
           <>

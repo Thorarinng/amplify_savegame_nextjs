@@ -2,12 +2,10 @@ import React from "react";
 
 export const UserStat = ({ userStat }) => {
   return (
-    <div>
-      {userStat.game.id}
-      {userStat.game.name}
-      {userStat.game.gameStartDate}
+    <>
+      Health: {userStat.health}
       <br />
-      {userStat.game.gameEndDate}
-    </div>
+      Balance: ${userStat.money}
+    </>
   );
 };

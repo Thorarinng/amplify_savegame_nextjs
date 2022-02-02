@@ -107,7 +107,7 @@ const userService = () => {
 
       // TODO: Add all exception cases
       // Basis exception s.t
-      // throw new Error(e.response);
+      throw new Error(e.response);
     }
   };
 

@@ -74,9 +74,8 @@ const Countdown = (props) => {
 
   return (
     <div>
-      {seconds === 0 ? (
-        <h3>Question Unlocked !</h3>
-      ) : (
+      {seconds === 0 ? // <h3>Question Unlocked !</h3>
+      null : (
         <div>
           <h2>Question becomes available in</h2>
           {getCountDown()}

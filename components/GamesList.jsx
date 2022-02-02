@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import gameService from "../service/gameService";
 
@@ -18,10 +18,9 @@ export const GamesList = ({
           {games.map((g) => {
             return (
               <div key={g.id}>
-                {g.id}
+                {/* {new Date(g.gameStartDate).toDateString()}
+                {new Date(g.gameEndDate).toDateString()} */}
                 {g.name}
-                {g.gameStartDate}
-                {g.gameEndDate}
                 {path === null ? (
                   <button onClick={() => onClickFunc(g.id)} className="btn">
                     {buttonMsg}
