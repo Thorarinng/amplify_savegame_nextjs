@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import characterService from "../service/characterService";
 import charStyles from "../styles/Character.module.css";
 
+// import charImg from "../public/IMG_4938.png";
+
 export const Character = ({ c, len }) => {
   const router = useRouter();
 
@@ -23,20 +25,18 @@ export const Character = ({ c, len }) => {
   return (
     <div className={charStyles.card}>
       <strong>
-        <p> Character {c.id}</p>
+        <p> {c.name}</p>
+        {/* <img src={"/IMG_4938.png"} className="charImg" />
+        <img src={"/IMG_4939.png"} className="charImg" />
+        <img src={"/IMG_4940.png"} className="charImg" /> */}
+        <img src={"/IMG_4941.png"} className="charImg" />
       </strong>
 
-      <div>
-        <p> {c.name}</p>
-      </div>
+      <ul>
+        <li>{c.detail1}</li>
+        <li>{c.detail2}</li>
+      </ul>
 
-      <div>
-        <p> {c.detail1}</p>
-      </div>
-
-      <div>
-        <p> {c.detail2}</p>
-      </div>
       <button onClick={() => handleSelectCharacter(c.id)} className="btn">
         Select
       </button>

@@ -35,80 +35,58 @@ const userService = () => {
     /* This function uses /api/logout.js to remove cookies  */
 
     // request to register with user credentials
-    try {
-      const res = await axios.post(`${buri}api/user/register/`, {
-        email,
-        password,
-        password2,
-        firstname,
-        lastname,
-        username,
-      });
 
-      console.log("hallo");
+    const res = await axios.post(`${buri}api/user/register/`, {
+      email,
+      password,
+      password2,
+      firstname,
+      lastname,
+      username,
+    });
 
-      console.log(email, password, password2, firstname, lastname, username);
+    console.log("hallo");
 
-      // const res = await axios.post(
-      //   `${furi}api/register/`,
-      //   {
-      //     email,
-      //     password,
-      //     password2,
-      //     firstname,
-      //     lastname,
-      //     username,
-      //   },
-      //   { withCredentials: true }
-      // );
+    console.log(email, password, password2, firstname, lastname, username);
 
-      __saveToLocalStorage(res);
+    // const res = await axios.post(
+    //   `${furi}api/register/`,
+    //   {
+    //     email,
+    //     password,
+    //     password2,
+    //     firstname,
+    //     lastname,
+    //     username,
+    //   },
+    //   { withCredentials: true }
+    // );
 
-      // assign user data to variable and return to component
-      const user = res.data;
-      return user;
-    } catch (e) {
-      // Service or user input failed
-      // console.log(e);
-      console.log(e.response);
-      console.log(e.response.status);
+    __saveToLocalStorage(res);
 
-      // TODO: Add all exception cases
-      // Basis exception s.t
-      throw new Error(e.response);
-    }
+    // assign user data to variable and return to component
+    const user = res.data;
+    return user;
   };
 
   const login = async (email, password) => {
     /* This function uses /api/logout.js to ADD cookies  */
     console.log("in login func2");
-    try {
-      // request to login with user credentials
-      const res = await axios.post(
-        `${buri}api/user/login/`,
-        {
-          email,
-          password,
-        }
-        // { withCredentials: true }
-      );
-      console.log("in login func");
-      console.log(res);
+    const res = await axios.post(
+      `${buri}api/user/login/`,
+      {
+        email,
+        password,
+      }
+      // { withCredentials: true }
+    );
+    console.log("in login func");
+    console.log(res);
 
-      __saveToLocalStorage(res);
-      // assign user data to variable and return to component
-      const user = res.data;
-      return user;
-    } catch (e) {
-      // Service or user input failed
-      console.log(e);
-      console.log(e.response);
-      console.log(e.response.status);
-
-      // TODO: Add all exception cases
-      // Basis exception s.t
-      throw new Error(e.response);
-    }
+    __saveToLocalStorage(res);
+    // assign user data to variable and return to component
+    const user = res.data;
+    return user;
   };
 
   const logout = async () => {

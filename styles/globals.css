@@ -296,3 +296,7 @@ a {
     justify-content: center;
   }
 }
+
+.charImg {
+  width: 100%;
+}

@@ -19,13 +19,13 @@ const characterSelection = () => {
   console.log(characters);
 
   return (
-    <div>
+    <>
       <h1>characterSelection </h1>
       {characters.map((c) => {
         return <Character key={c.id} c={c} len={characters.length} />;
       })}
       <GoBackButton path={"/game"} title={"Back"} />
-    </div>
+    </>
   );
 };
 // export async function getServerSideProps({ req }) {

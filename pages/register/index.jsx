@@ -20,6 +20,8 @@ const Register = (props) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
+  const [errorMsg, setErrorMsg] = useState({});
+
   const handleRegister = async () => {
     try {
       const user = await userService.register({
@@ -33,7 +35,8 @@ const Register = (props) => {
       dispatch(USER_REGISTER_ACTION(user));
       routeHistory.push("game");
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
+      setErrorMsg(e.response.data);
     }
   };
 
@@ -45,25 +48,29 @@ const Register = (props) => {
           <div>
             <form>
               <h3>Username</h3>
+              {errorMsg.username}
               <input
                 placeholder="Enter your username"
                 type="text"
                 onChange={(e) => setUsername(e.target.value)}
               />
               <h3>First name</h3>
+              {errorMsg.firstname}
               <input
                 placeholder="First name"
                 type="text"
                 onChange={(e) => setFirstname(e.target.value)}
               />
               <h3>Last name</h3>
+              {errorMsg.lastname}
               <input
                 placeholder="Last name"
                 type="text"
                 onChange={(e) => setLastname(e.target.value)}
               />
 
-              <h3>Email Id</h3>
+              <h3>Email </h3>
+              {errorMsg.email}
               <input
                 placeholder="Enter your email address"
                 type="email"
@@ -71,6 +78,7 @@ const Register = (props) => {
               />
 
               <h3>Password</h3>
+              {errorMsg.password}
               <input
                 placeholder="Enter your password"
                 type="password"
@@ -78,6 +86,7 @@ const Register = (props) => {
               />
 
               <h3>Password</h3>
+              {errorMsg.password2}
               <input
                 placeholder="Reenter your password"
                 type="password"

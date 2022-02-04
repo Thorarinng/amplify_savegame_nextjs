@@ -16,6 +16,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [errorMsg, setErrorMsg] = useState({});
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -32,6 +34,9 @@ const Login = () => {
       Router.push("game");
     } catch (e) {
       console.log("log in failed");
+      console.log(e.response);
+      console.log(e.response.data);
+      setErrorMsg(e.response.data);
     }
   };
   return (
@@ -41,11 +46,16 @@ const Login = () => {
           <form>
             <h1> Sign in </h1>
             <h3>Email</h3>
+            {errorMsg.email}
+            {/* {Object.values(errorMsg).map((em) => (
+              <p>{em}</p>
+            ))} */}
             <input
               placeholder="Enter your email address"
               onChange={handleEmailChange}
             />
             <h3>Password</h3>
+            {errorMsg.password}
             <input
               placeholder="Enter your password"
               onChange={handlePasswordChange}
@@ -55,6 +65,7 @@ const Login = () => {
             <br />
 
             <br />
+            {errorMsg.detail}
             <button
               className="btn"
               type="button"
