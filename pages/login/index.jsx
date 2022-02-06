@@ -62,9 +62,6 @@ const Login = () => {
               type="password"
             />
 
-            <br />
-
-            <br />
             {errorMsg.detail}
             <button
               className="btn"

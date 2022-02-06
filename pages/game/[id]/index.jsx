@@ -4,7 +4,6 @@ import router, { useRouter } from "next/router";
 
 import characterService from "../../../service/characterService";
 import cookieService from "../../../service/cookieService";
-import { Character } from "../../../components/Character";
 import { Game } from "../../../components/Game";
 import { UserStat } from "../../../components/UserStat";
 import gameService from "../../../service/gameService";
@@ -12,6 +11,7 @@ import { GoBackButton } from "../../../core/buttons/GoBackButton";
 
 import gameStyles from "../../../styles/Game.module.css";
 import Loading from "../../../components/Loading";
+import { Character } from "../../../components/Character";
 
 const PlayingGame = () => {
   const { query } = useRouter();
@@ -52,7 +52,7 @@ const PlayingGame = () => {
         <Loading />
       ) : (
         <>
-          <Character c={character} />
+          <Character />
           <UserStat userStat={userStat} />
           <Game game={game} />
           <GoBackButton path="/game" title={"Back"} />

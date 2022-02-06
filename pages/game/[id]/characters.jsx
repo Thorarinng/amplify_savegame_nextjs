@@ -22,7 +22,7 @@ const characterSelection = () => {
     <>
       <h1>characterSelection </h1>
       {characters.map((c) => {
-        return <Character key={c.id} c={c} len={characters.length} />;
+        return <CharacterCard key={c.id} c={c} len={characters.length} />;
       })}
       <GoBackButton path={"/game"} title={"Back"} />
     </>

@@ -127,6 +127,7 @@ form {
   border-color: grey;
 
   padding: 2rem;
+  margin-bottom: 1em;
 }
 
 .form-main-inner {
@@ -298,5 +299,5 @@ a {
 }
 
 .charImg {
-  width: 100%;
+  width: 400px;
 }
