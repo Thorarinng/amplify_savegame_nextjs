@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import cookieService from "../../../service/cookieService";
 import characterService from "../../../service/characterService";
-import { Character } from "../../../components/Character";
+import { CharacterCard } from "../../../components/CharacterCard";
 import { GoBackButton } from "../../../core/buttons/GoBackButton";
 import { useEffect } from "react";
 

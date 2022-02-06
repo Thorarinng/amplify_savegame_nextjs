@@ -22,25 +22,33 @@ const PlayingGame = () => {
   const [hasCharacter, setHasCharacter] = useState(null);
   const [game, setGame] = useState(null);
 
+  const [QTA, setQTA] = useState(null);
+
   useEffect(async () => {
-    const res = await characterService.getAllCharacters();
-    // extract data from response
-    const characterData = res.data;
+    try {
+      const res = await characterService.getAllCharacters();
+      // extract data from response
+      const characterData = res.data;
 
-    if (characterData.hasCharacter) {
-      console.log("I have character");
-      const res = await gameService.getGame();
-      const gameData = res.data;
-      setUserStat(characterData.userStat);
-      setCharacter(characterData.character);
-      setHasCharacter(characterData.hasCharacter);
-      setGame(gameData);
-      setIsLoading(false);
-    }
+      if (characterData.hasCharacter) {
+        console.log("I have character");
+        const res = await gameService.getGame();
+        const gameData = res.data;
+        setUserStat(characterData.userStat);
+        setCharacter(characterData.character);
+        setHasCharacter(characterData.hasCharacter);
+        setGame(gameData);
+        setQTA(gameData.questionToAnswer);
+        setIsLoading(false);
+      }
 
-    if (!characterData.hasCharacter) {
-      console.log("I dont have character");
-      router.push(`/game/${query.id}/characters`);
+      if (!characterData.hasCharacter) {
+        console.log("I dont have character");
+        console.log(query.id);
+        router.push(`/game/${query.id}/characters`);
+      }
+    } catch (e) {
+      console.log(e.response);
     }
   }, []);
 
@@ -52,9 +60,9 @@ const PlayingGame = () => {
         <Loading />
       ) : (
         <>
-          <Character />
           <UserStat userStat={userStat} />
-          <Game game={game} />
+          <Character QTA={QTA} />
+          <Game game={game} QTA={QTA} setQTA={setQTA} />
           <GoBackButton path="/game" title={"Back"} />
         </>
       )}
