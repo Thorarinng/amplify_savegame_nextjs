@@ -9,28 +9,27 @@ export const GamesList = ({
   buttonMsg,
   onClickFunc,
   path,
+  options,
 }) => {
   return (
     <div>
       {games.length >= 0 && (
         <>
-          <h1> {title} </h1>
+          <h1 className="txt-white"> {title} </h1>
           {games.map((g) => {
             return (
               <div key={g.id}>
                 {/* {new Date(g.gameStartDate).toDateString()}
                 {new Date(g.gameEndDate).toDateString()} */}
-                {g.name}
-                {path === null ? (
+                <span className="txt-white">{g.name}</span>
+                {options.isStats ? (
+                  <Link href={`${path}/${g.id}`}>
+                    <button className="btn">{buttonMsg}</button>
+                  </Link>
+                ) : (
                   <button onClick={() => onClickFunc(g.id)} className="btn">
                     {buttonMsg}
                   </button>
-                ) : (
-                  <Link href={`${path}/${g.id}`}>
-                    <button onClick={() => onClickFunc(g.id)} className="btn">
-                      {buttonMsg}
-                    </button>
-                  </Link>
                 )}
               </div>
             );

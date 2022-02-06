@@ -9,6 +9,7 @@ import { GoBackButton } from "../../core/buttons/GoBackButton";
 import GuardImage from "../../core/images/GuardImage";
 
 import Loading from "../../components/Loading";
+import router from "next/router";
 
 const Game = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,7 @@ const Game = () => {
 
   const handleJoinGame = async (gameId) => {
     await gameService.joinGame(gameId);
+    router.push(`/game/${gameId}`);
   };
 
   const filterGames = (toFiltGames) => {
@@ -63,6 +65,7 @@ const Game = () => {
                 buttonMsg="Play"
                 onClickFunc={handleJoinGame}
                 path={"/game"}
+                options={{}}
               />
               <GamesList
                 games={otherGames}
@@ -70,6 +73,7 @@ const Game = () => {
                 buttonMsg="Must finish ongoing games first"
                 onClickFunc={() => alert("Finish ongoing matches first")}
                 path={null}
+                options={{}}
               />
             </>
           ) : (
@@ -79,6 +83,7 @@ const Game = () => {
               buttonMsg="Join"
               path={"/game"}
               onClickFunc={handleJoinGame}
+              options={{}}
             />
           )}
           <GamesList
@@ -87,6 +92,7 @@ const Game = () => {
             buttonMsg="View Stats"
             onClickFunc={() => {}}
             path={"/game/stats"}
+            options={{ isStats: true }}
           />
           <GoBackButton path={"/"} title={"Home"} />
         </>
