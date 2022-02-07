@@ -13,18 +13,24 @@ import gameStyles from "../../../styles/Game.module.css";
 import Loading from "../../../components/Loading";
 import { Character } from "../../../components/Character";
 
+import { useDispatch, useSelector } from "react-redux";
+import { USERSTAT_UPDATE_ACTION } from "../../../redux/actions/userStatActions";
+
 const PlayingGame = () => {
   const { query } = useRouter();
 
+  const userStat = useSelector((state) => state.userStatReducer.data);
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
-  const [userStat, setUserStat] = useState(null);
+  // const [userStat, setUserStat] = useState(null);
   const [character, setCharacter] = useState(null);
   const [hasCharacter, setHasCharacter] = useState(null);
   const [game, setGame] = useState(null);
 
   const [QTA, setQTA] = useState(null);
 
-  useEffect(async () => {
+  const fetchData = async () => {
     try {
       const res = await characterService.getAllCharacters();
       // extract data from response
@@ -34,7 +40,10 @@ const PlayingGame = () => {
         console.log("I have character");
         const res = await gameService.getGame();
         const gameData = res.data;
-        setUserStat(characterData.userStat);
+        console.log("inserting into redux");
+        console.log(characterData.userStat);
+        dispatch(USERSTAT_UPDATE_ACTION(characterData.userStat));
+
         setCharacter(characterData.character);
         setHasCharacter(characterData.hasCharacter);
         setGame(gameData);
@@ -50,6 +59,10 @@ const PlayingGame = () => {
     } catch (e) {
       console.log(e.response);
     }
+  };
+
+  useEffect(async () => {
+    await fetchData();
   }, []);
 
   // get back userstat
@@ -60,8 +73,8 @@ const PlayingGame = () => {
         <Loading />
       ) : (
         <>
-          <UserStat userStat={userStat} />
-          <Character QTA={QTA} />
+          <Character />
+          <UserStat />
           <Game game={game} QTA={QTA} setQTA={setQTA} />
           <GoBackButton path="/game" title={"Back"} />
         </>

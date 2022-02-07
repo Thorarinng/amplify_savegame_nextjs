@@ -22,3 +22,24 @@
 .container {
   padding: 2px 16px;
 }
+
+.characterSelection {
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 500px;
+}
+
+.details {
+  display: inherit;
+  flex-direction: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+
+  padding-left: 1em;
+  padding-right: 1em;
+}

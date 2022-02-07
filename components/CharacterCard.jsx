@@ -5,12 +5,8 @@ import charStyles from "../styles/Character.module.css";
 
 // import charImg from "../public/IMG_4938.png";
 
-export const CharacterCard = ({ c, len }) => {
+export const CharacterCard = ({ c }) => {
   const router = useRouter();
-
-  useEffect(() => {}, [len]);
-
-  console.log(c, len);
 
   const handleSelectCharacter = async (characterId) => {
     // Select character for specific game
@@ -23,18 +19,20 @@ export const CharacterCard = ({ c, len }) => {
     router.push(prevPath);
   };
   return (
-    <div className={charStyles.card}>
+    <div className={charStyles.characterSelection}>
       <strong>
         <p> {c.name}</p>
-        {/* <img src={"/IMG_4938.png"} className="charImg" />
-        <img src={"/IMG_4939.png"} className="charImg" />
-        <img src={"/IMG_4940.png"} className="charImg" /> */}
-        <img src={"/IMG_4941.png"} className="charImg" />
+        <img src={"/IMG_4938.png"} className="charImg" />
+        {/* <img src={"/IMG_4939.png"} className="charImg" /> */}
+        {/* <img src={"/IMG_4940.png"} className="charImg" /> */}
+        {/* <img src={"/IMG_4941.png"} className="charImg" /> */}
       </strong>
 
-      <ul>
-        <li>{c.detail1}</li>
-        <li>{c.detail2}</li>
+      <ul className={charStyles.details}>
+        <h1> About Joel </h1>
+        <p>{c.detail1}</p>
+        <h1> More </h1>
+        <p>{c.detail2}</p>
       </ul>
 
       <button onClick={() => handleSelectCharacter(c.id)} className="btn">

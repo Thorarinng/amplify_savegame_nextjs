@@ -10,8 +10,11 @@ import GuardImage from "../../core/images/GuardImage";
 
 import Loading from "../../components/Loading";
 import router from "next/router";
+import { useDispatch } from "react-redux";
+import { CHARACTER_UPDATE_ACTION } from "../../redux/actions/characterActions";
 
 const Game = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
   //
@@ -43,6 +46,7 @@ const Game = () => {
   };
 
   useEffect(async () => {
+    dispatch(CHARACTER_UPDATE_ACTION(1));
     await getGames();
   }, []);
 

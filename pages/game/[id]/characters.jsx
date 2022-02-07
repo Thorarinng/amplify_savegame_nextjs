@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import cookieService from "../../../service/cookieService";
 import characterService from "../../../service/characterService";
 import { CharacterCard } from "../../../components/CharacterCard";
 import { GoBackButton } from "../../../core/buttons/GoBackButton";
@@ -12,17 +11,14 @@ const characterSelection = () => {
     const res = await characterService.getAllCharacters();
     //   // extract data from response
     const data = res.data;
-    console.log(data);
     setCharacters(data.characters);
   }, []);
 
-  console.log(characters);
-
   return (
     <>
-      <h1>characterSelection </h1>
+      <h1 className="txt-white">Select Character </h1>
       {characters.map((c) => {
-        return <CharacterCard key={c.id} c={c} len={characters.length} />;
+        return <CharacterCard key={c.id} c={c} />;
       })}
       <GoBackButton path={"/game"} title={"Back"} />
     </>

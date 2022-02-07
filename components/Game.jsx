@@ -3,8 +3,15 @@ import gameService from "../service/gameService";
 import { Decision } from "./Decision";
 import Countdown from "./Countdown";
 import gameStyles from "../styles/Game.module.css";
+import { useDispatch } from "react-redux";
+
+import { CHARACTER_UPDATE_ACTION } from "../redux/actions/characterActions";
+import { USERSTAT_UPDATE_ACTION } from "../redux/actions/userStatActions";
+
+import { GameOver } from "./GameOver";
 
 export const Game = ({ game, QTA, setQTA }) => {
+  const dispatch = useDispatch();
   // option - which answer is user answering - choice
   const [option, setOption] = useState(null);
   const [isLocked, setIsLocked] = useState(!game.canMakeDecision);
@@ -21,6 +28,9 @@ export const Game = ({ game, QTA, setQTA }) => {
     setIsFeedback(false);
     // Reset this var - s.t it does not have selected value for next question
     setOption(null);
+
+    // Change character after user handles the feedback
+    dispatch(CHARACTER_UPDATE_ACTION(QTA));
   };
 
   const handleNext = async () => {
@@ -30,27 +40,22 @@ export const Game = ({ game, QTA, setQTA }) => {
     if (isLocked) return;
     if (option === null) return;
     const data = await gameService.makeDecision(option);
-    console.log(data.canMakeDecision);
-
-    console.log(option);
 
     // user is displayed feedback from the previous question
     setIsFeedback(true);
-
     // New values set for next question
     setIsLocked(game.canMakeDecision);
     setTimeUntil(data.timeUntil);
     setIsFinished(data.isGameDone);
+
     setQTA(data.questionToAnswer);
+
+    if (data.game.isDead) setIsFinished(data.game.isDead);
+    dispatch(USERSTAT_UPDATE_ACTION(data.game));
   };
 
   const handleValueChange = (idx) => {
-    // e - event
     if (isLocked) return;
-    // console.log(idx.target.value);
-    const answ = game.QA[`answer${QTA}`][idx];
-    console.log(typeof idx);
-    console.log(idx);
     setOption(idx);
   };
 
@@ -58,12 +63,15 @@ export const Game = ({ game, QTA, setQTA }) => {
     console.log("refresh page - QTA");
   }, [QTA]);
 
-  useEffect(() => {}, [timeUntil]);
+  // When the game finishes we change back to first img of character
+  if (isFinished) dispatch(CHARACTER_UPDATE_ACTION(1));
 
   return (
     <>
       {isFinished ? (
-        <> You have finished game </>
+        <>
+          <GameOver />
+        </>
       ) : (
         <>
           {isFeedback ? (
@@ -86,19 +94,12 @@ export const Game = ({ game, QTA, setQTA }) => {
             </>
           ) : (
             <>
-              <br />
-              <br />
-
               <div>
                 <h1 className="title">Question {QTA}</h1>
                 <p className={gameStyles.question}>
-                  {" "}
                   {game.QA[`question${QTA}`]}
                 </p>
               </div>
-
-              <br />
-              <br />
 
               <div>
                 <Countdown
@@ -124,11 +125,13 @@ export const Game = ({ game, QTA, setQTA }) => {
 
               <button
                 disabled={option === null || isLocked}
-                className={isLocked ? "btn-disabled" : "btn"}
+                // className={isLocked ? "btn-disabled" : "btn"}
+                className={option === null ? "btn-disabled" : "btn"}
                 type="button"
                 onClick={() => handleNext()}
               >
-                {isLocked ? "Locked" : "Next"}
+                {/* {isLocked ? "Locked" : "Next"} */}
+                {option === null ? "Choose what to do" : "Next"}
               </button>
             </>
           )}

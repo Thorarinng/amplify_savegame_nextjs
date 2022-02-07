@@ -1,9 +1,13 @@
 import { createStore, combineReducers } from "redux";
 
 import userReducer from "./reducers/userReducer";
+import userStatReducer from "./reducers/userStatReducer";
+import characterReducer from "./reducers/characterReducer";
 
 const allReducers = combineReducers({
   userReducer,
+  userStatReducer,
+  characterReducer,
 });
 
 export default createStore(

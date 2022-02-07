@@ -4,7 +4,6 @@ import authService from "./authService";
 
 const gameService = () => {
   const getAllGames = async (accessToken) => {
-    console.log(axios.defaults.headers.common.Authorization);
     const res = await axios.get(`${buri}api/game/join/`);
     return res;
   };

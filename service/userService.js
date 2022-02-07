@@ -7,8 +7,6 @@ import buri from "../config/django";
 
 const userService = () => {
   const __saveToLocalStorage = (response) => {
-    console.log(response.data);
-    console.log("HERE");
     const { tokens } = response.data;
     const accessToken = tokens.access;
     const user = response.data;
@@ -45,10 +43,6 @@ const userService = () => {
       username,
     });
 
-    console.log("hallo");
-
-    console.log(email, password, password2, firstname, lastname, username);
-
     // const res = await axios.post(
     //   `${furi}api/register/`,
     //   {
@@ -71,7 +65,6 @@ const userService = () => {
 
   const login = async (email, password) => {
     /* This function uses /api/logout.js to ADD cookies  */
-    console.log("in login func2");
     const res = await axios.post(
       `${buri}api/user/login/`,
       {
@@ -80,8 +73,6 @@ const userService = () => {
       }
       // { withCredentials: true }
     );
-    console.log("in login func");
-    console.log(res);
 
     __saveToLocalStorage(res);
     // assign user data to variable and return to component
@@ -100,10 +91,6 @@ const userService = () => {
       const res = await axios.post(`${buri}api/user/logout/`, tokens);
     } catch (e) {
       // Service or user input failed
-      console.log(e);
-      console.log(e.response);
-      console.log(e.response.status);
-
       // TODO: Add all exception cases
       // Basis exception s.t
       // throw new Error(e.response);
@@ -119,7 +106,7 @@ const userService = () => {
       });
       return res.data;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -135,7 +122,6 @@ const userService = () => {
   };
 
   const changePassword = async ({ uidb64, token, password }) => {
-    console.log(uidb64, token, password);
     try {
       // await axios.get(`${buri}api/user/passwordResetComplete/`);
       const res = await axios.patch(`${buri}api/user/passwordResetComplete/`, {
@@ -145,7 +131,7 @@ const userService = () => {
       });
       return res.data;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

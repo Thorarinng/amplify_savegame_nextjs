@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 import { USER_REGISTER_ACTION } from "../../redux/actions/userActions";
 
 import loginStyles from "../../styles/Login.module.css";
-import { GoBackButton } from "../../core/buttons/GoBackButton";
-import GuardImage from "../../core/images/GuardImage";
 import { HomeButton } from "../../core/buttons/HomeButton";
 
 const Register = (props) => {

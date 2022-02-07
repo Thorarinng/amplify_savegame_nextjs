@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap");
 
 .content {
+  /* position: absolute; */
   width: 100vw;
   height: 10px;
   /* height: 100vh; */
@@ -258,6 +259,22 @@
   text-align: center;
   font-family: "Trade Winds", Arial, Helvetica, serif;
   position: absolute;
+  font-size: 20vmin;
+  font-weight: bold;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*mix-blend-mode: overlay;*/
+  opacity: 0.95;
+  text-shadow: -2px -2px 2px #0000006b;
+  -webkit-text-stroke: 2.25vmin #0000004d;
+  -webkit-text-fill-color: #000000;
+}
+
+.text2 {
+  text-align: center;
+  font-family: "Trade Winds", Arial, Helvetica, serif;
   font-size: 20vmin;
   font-weight: bold;
   height: 100%;

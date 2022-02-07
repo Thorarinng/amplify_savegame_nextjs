@@ -3,11 +3,8 @@ import userService from "../../service/userService";
 import Router from "next/router";
 import { useDispatch } from "react-redux";
 import { USER_LOGIN_ACTION } from "../../redux/actions/userActions";
-import GuardImage from "../../core/images/GuardImage";
 
 import loginStyles from "../../styles/Login.module.css";
-import { HomeButton } from "../../core/buttons/HomeButton";
-import { GoBackButton } from "../../core/buttons/GoBackButton";
 
 const Login = () => {
   // Dispatch

@@ -6,7 +6,7 @@ import authService from "../service/authService";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_LOGIN_ACTION } from "../redux/actions/userActions";
 
-import { GameOver } from "./GameOver";
+import { Blood } from "./Blood";
 // Here the layout of the website should be inserted
 // Nav
 // CONTENT
@@ -59,9 +59,7 @@ const Layout = ({ children }) => {
     <>
       {isLoaded && (
         <div>
-          <div className="blood">
-            <GameOver />
-          </div>
+          <div className="blood">{/* <Blood /> */}</div>
           <div className={homeStyles.container}>
             <h1 className="title"> Safe Game</h1>
             {children}
