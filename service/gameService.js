@@ -4,7 +4,11 @@ import authService from "./authService";
 
 const gameService = () => {
   const getAllGames = async (accessToken) => {
-    const res = await axios.get(`${buri}api/game/join/`);
+    const res = await axios.get(`${buri}api/game/join/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return res;
   };
 
@@ -12,8 +16,12 @@ const gameService = () => {
     await axios.post(`${buri}api/game/join/`, { gameId });
   };
 
-  const getGame = async () => {
-    const res = await axios.get(`${buri}api/userStat/`);
+  const getGame = async (accessToken) => {
+    const res = await axios.get(`${buri}api/userStat/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return res;
   };
 
@@ -22,8 +30,12 @@ const gameService = () => {
     return res.data;
   };
 
-  const viewStats = async ({ gameId }) => {
-    const res = await axios.get(`${buri}api/userStat/history/${gameId}`);
+  const viewStats = async ({ accessToken, gameId }) => {
+    const res = await axios.get(`${buri}api/userStat/history/${gameId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return res;
   };
 

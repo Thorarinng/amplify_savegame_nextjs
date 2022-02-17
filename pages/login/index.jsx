@@ -31,7 +31,7 @@ const Login = () => {
       Router.push("game");
     } catch (e) {
       console.log("log in failed");
-      console.log(e.response);
+      console.log(e);
       console.log(e.response.data);
       setErrorMsg(e.response.data);
     }

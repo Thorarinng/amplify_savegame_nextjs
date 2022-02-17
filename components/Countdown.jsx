@@ -62,7 +62,7 @@ const Countdown = (props) => {
 
   const getCountDown = () => {
     return (
-      <h1>
+      <h1 className="txt-white">
         {/* {initSeconds} */}
         {/* {seconds} */}
         {days}:{hours}:{minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -74,7 +74,7 @@ const Countdown = (props) => {
     <div>
       {seconds === 0 ? null : ( // <h3>Question Unlocked !</h3>
         <div>
-          <h2>Question becomes available in</h2>
+          <h2 className="txt-white">Question becomes available in</h2>
           {getCountDown()}
         </div>
       )}

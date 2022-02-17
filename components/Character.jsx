@@ -1,9 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-export const Character = () => {
-  const QTA = useSelector((state) => state.characterReducer.data);
-  console.log(QTA);
+export const Character = ({ QTA }) => {
   return (
     <>
       <h1 className="txt-white">Joel</h1>

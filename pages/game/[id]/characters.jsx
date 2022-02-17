@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import characterService from "../../../service/characterService";
+import cookieService from "../../../service/cookieService";
 import { CharacterCard } from "../../../components/CharacterCard";
 import { GoBackButton } from "../../../core/buttons/GoBackButton";
 import { useEffect } from "react";
 
-const characterSelection = () => {
-  const [characters, setCharacters] = useState([]);
+const characterSelection = ({ characters }) => {
+  // const [characters, setCharacters] = useState([]);
 
-  useEffect(async () => {
-    const res = await characterService.getAllCharacters();
-    //   // extract data from response
-    const data = res.data;
-    setCharacters(data.characters);
-  }, []);
+  // useEffect(async () => {
+  //   const res = await characterService.getAllCharacters();
+  //   //   // extract data from response
+  //   const data = res.data;
+  //   setCharacters(data.characters);
+  // }, []);
 
   return (
     <>
@@ -24,36 +25,37 @@ const characterSelection = () => {
     </>
   );
 };
-// export async function getServerSideProps({ req }) {
-//   // Source - SSR: https://imgur.com/a/WhqxKNu
-//   // Extract accestoken from cookie
-//   const accessToken = cookieService.getAccessToken(req);
-//   // get all games to join
-//   const res = await characterService.getAllCharacters(accessToken);
 
-//   // extract data from response
-//   const data = res.data;
+export async function getServerSideProps({ req }) {
+  // Source - SSR: https://imgur.com/a/WhqxKNu
+  // Extract accestoken from cookie
+  const accessToken = cookieService.getAccessToken(req);
+  // get all games to join
+  const res = await characterService.getAllCharacters(accessToken);
 
-//   console.log("data", data);
+  // extract data from response
+  const data = res.data;
 
-//   if (res.status === 401) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: "/login",
-//       },
-//     };
-//   }
+  console.log("data", data);
 
-//   // if (data.hasCharacter) return {props: { userStat: data.userStat, character: data.character, hasCharacter: data.hasCharacter  }} // will be passed to the page component as props
-//   if (!data.hasCharacter) return { props: { characters: data.characters } };
+  if (res.status === 401) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
 
-//   return {
-//     redirect: {
-//       permanent: false,
-//       destination: `error`,
-//     },
-//   };
-// }
+  // if (data.hasCharacter) return {props: { userStat: data.userStat, character: data.character, hasCharacter: data.hasCharacter  }} // will be passed to the page component as props
+  if (!data.hasCharacter) return { props: { characters: data.characters } };
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: `error`,
+    },
+  };
+}
 
 export default characterSelection;

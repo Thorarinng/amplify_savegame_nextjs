@@ -1,12 +1,12 @@
-import cookie from "cookie";
-import { addConfig, removeConfig } from "../../config/cookie";
-import cookieService from "../../service/cookieService";
+import cookie, { serialize } from "cookie";
+import { addConfig, removeConfig } from "../config/cookie";
+import cookieService from "./cookieService";
 
 const helper = () => {
   const addCookies = (res, data) => {
     res.setHeader("Set-Cookie", [
-      cookie.serialize("access", data.tokens.access, addConfig),
-      cookie.serialize("refresh", data.tokens.refresh, addConfig),
+      serialize("access", data.tokens.access, { path: "/" }),
+      serialize("refresh", data.tokens.refresh, { path: "/" }),
     ]);
 
     return res;
@@ -14,8 +14,8 @@ const helper = () => {
 
   const removeCookies = (res) => {
     res.setHeader("Set-Cookie", [
-      cookie.serialize("access", "", removeConfig),
-      cookie.serialize("refresh", "", removeConfig),
+      serialize("access", "", { path: "/" }),
+      serialize("refresh", "", { path: "/" }),
     ]);
 
     return res;

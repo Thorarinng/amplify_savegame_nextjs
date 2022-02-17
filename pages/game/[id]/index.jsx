@@ -15,112 +15,110 @@ import { Character } from "../../../components/Character";
 
 import { useDispatch, useSelector } from "react-redux";
 import { USERSTAT_UPDATE_ACTION } from "../../../redux/actions/userStatActions";
+import { CHARACTER_UPDATE_ACTION } from "../../../redux/actions/characterActions";
 
-const PlayingGame = () => {
+const PlayingGame = ({ userStat, character, hasCharacter, game }) => {
   const { query } = useRouter();
 
-  const userStat = useSelector((state) => state.userStatReducer.data);
-  const dispatch = useDispatch();
-
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   // const [userStat, setUserStat] = useState(null);
-  const [character, setCharacter] = useState(null);
-  const [hasCharacter, setHasCharacter] = useState(null);
-  const [game, setGame] = useState(null);
+  // const [character, setCharacter] = useState(null);
+  // const [hasCharacter, setHasCharacter] = useState(null);
+  // const [game, setGame] = useState(null);
 
-  const [QTA, setQTA] = useState(null);
+  console.log(game.questionToAnswer);
 
-  const fetchData = async () => {
-    try {
-      const res = await characterService.getAllCharacters();
-      // extract data from response
-      const characterData = res.data;
+  const [QTA, setQTA] = useState(game.questionToAnswer);
 
-      if (characterData.hasCharacter) {
-        console.log("I have character");
-        const res = await gameService.getGame();
-        const gameData = res.data;
-        console.log("inserting into redux");
-        console.log(characterData.userStat);
-        dispatch(USERSTAT_UPDATE_ACTION(characterData.userStat));
+  // const fetchData = async () => {
+  //   try {
+  //     const res = await characterService.getAllCharacters();
+  //     // extract data from response
+  //     const characterData = res.data;
 
-        setCharacter(characterData.character);
-        setHasCharacter(characterData.hasCharacter);
-        setGame(gameData);
-        setQTA(gameData.questionToAnswer);
-        setIsLoading(false);
-      }
+  //     if (characterData.hasCharacter) {
+  //       console.log("I have character");
+  //       const res = await gameService.getGame();
+  //       const gameData = res.data;
+  //       console.log("inserting into redux");
+  //       console.log(characterData.userStat);
+  //       dispatch(USERSTAT_UPDATE_ACTION(characterData.userStat));
+  //       dispatch(CHARACTER_UPDATE_ACTION(gameData.questionToAnswer));
 
-      if (!characterData.hasCharacter) {
-        console.log("I dont have character");
-        console.log(query.id);
-        router.push(`/game/${query.id}/characters`);
-      }
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
+  //       setCharacter(characterData.character);
+  //       setHasCharacter(characterData.hasCharacter);
+  //       setGame(gameData);
+  //       setQTA(gameData.questionToAnswer);
+  //       setIsLoading(false);
+  //     }
 
-  useEffect(async () => {
-    await fetchData();
-  }, []);
+  //     if (!characterData.hasCharacter) {
+  //       console.log("I dont have character");
+  //       console.log(query.id);
+  //       router.push(`/game/${query.id}/characters`);
+  //     }
+  //   } catch (e) {
+  //     console.log(e.response);
+  //   }
+  // };
+
+  // useEffect(async () => {
+  //   await fetchData();
+  // }, []);
 
   // get back userstat
   // Pick a character
+
   return (
     <div className={gameStyles.container}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Character />
-          <UserStat />
-          <Game game={game} QTA={QTA} setQTA={setQTA} />
-          <GoBackButton path="/game" title={"Back"} />
-        </>
-      )}
+      <Character QTA={QTA} />
+      <UserStat userStat={userStat} />
+      <Game game={game} QTA={QTA} setQTA={setQTA} />
+      <GoBackButton path="/game" title={"Back"} />
     </div>
   );
 };
 
-// export async function getServerSideProps({ req, query }) {
-//   // Source - SSR: https://imgur.com/a/WhqxKNu
-//   // Extract accestoken from cookie
-//   const accessToken = cookieService.getAccessToken(req);
-//   // get all games to join
-//   const res = await characterService.getAllCharacters(accessToken);
+export async function getServerSideProps({ req, query }) {
+  // Source - SSR: https://imgur.com/a/WhqxKNu
+  // Extract accestoken from cookie
+  const accessToken = cookieService.getAccessToken(req);
 
-//   // extract data from response
-//   const characterData = res.data;
+  console.log(accessToken);
+  // get all games to join
+  const res = await characterService.getAllCharacters(accessToken);
 
-//   if (res.status === 401) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: "/login",
-//       },
-//     };
-//   }
+  // extract data from response
+  const characterData = res.data;
 
-//   if (characterData.hasCharacter) {
-//     const res = await gameService.getGame(accessToken);
-//     const gameData = res.data;
-//     return {
-//       props: {
-//         userStat: characterData.userStat,
-//         character: characterData.character,
-//         hasCharacter: characterData.hasCharacter,
-//         game: gameData,
-//       },
-//     }; // will be passed to the page component as props
-//   }
+  if (res.status === 401) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
 
-//   return {
-//     redirect: {
-//       permanent: false,
-//       destination: `/game/${query.id}/characters`,
-//     },
-//   };
-// }
+  if (characterData.hasCharacter) {
+    const res = await gameService.getGame(accessToken);
+    const gameData = res.data;
+    return {
+      props: {
+        userStat: characterData.userStat,
+        character: characterData.character,
+        hasCharacter: characterData.hasCharacter,
+        game: gameData,
+      },
+    }; // will be passed to the page component as props
+  }
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: `/game/${query.id}/characters`,
+    },
+  };
+}
 
 export default PlayingGame;

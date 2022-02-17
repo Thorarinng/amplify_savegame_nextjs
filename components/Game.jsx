@@ -130,8 +130,11 @@ export const Game = ({ game, QTA, setQTA }) => {
                 type="button"
                 onClick={() => handleNext()}
               >
-                {/* {isLocked ? "Locked" : "Next"} */}
-                {option === null ? "Choose what to do" : "Next"}
+                {isLocked ? (
+                  "Locked"
+                ) : (
+                  <>{option === null ? "Choose what to do" : "Next"}</>
+                )}
               </button>
             </>
           )}

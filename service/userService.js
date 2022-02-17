@@ -7,6 +7,7 @@ import buri from "../config/django";
 
 const userService = () => {
   const __saveToLocalStorage = (response) => {
+    console.log(response);
     const { tokens } = response.data;
     const accessToken = tokens.access;
     const user = response.data;
@@ -34,7 +35,7 @@ const userService = () => {
 
     // request to register with user credentials
 
-    const res = await axios.post(`${buri}api/user/register/`, {
+    const res = await axios.post(`api/register/`, {
       email,
       password,
       password2,
@@ -42,19 +43,6 @@ const userService = () => {
       lastname,
       username,
     });
-
-    // const res = await axios.post(
-    //   `${furi}api/register/`,
-    //   {
-    //     email,
-    //     password,
-    //     password2,
-    //     firstname,
-    //     lastname,
-    //     username,
-    //   },
-    //   { withCredentials: true }
-    // );
 
     __saveToLocalStorage(res);
 
@@ -64,15 +52,11 @@ const userService = () => {
   };
 
   const login = async (email, password) => {
-    /* This function uses /api/logout.js to ADD cookies  */
-    const res = await axios.post(
-      `${buri}api/user/login/`,
-      {
-        email,
-        password,
-      }
-      // { withCredentials: true }
-    );
+    /* This function uses /api/login.js to ADD cookies  */
+    const res = await axios.post(`api/login/`, {
+      email,
+      password,
+    });
 
     __saveToLocalStorage(res);
     // assign user data to variable and return to component
@@ -88,7 +72,7 @@ const userService = () => {
 
     try {
       // request to login with user credentials
-      const res = await axios.post(`${buri}api/user/logout/`, tokens);
+      const res = await axios.post(`api/logout/`, tokens);
     } catch (e) {
       // Service or user input failed
       // TODO: Add all exception cases
